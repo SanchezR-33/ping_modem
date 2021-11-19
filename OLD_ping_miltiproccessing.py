@@ -7,7 +7,6 @@ import time
 
 
 def ping():
-
     class SQL:
         def __init__(self):
             self.connection = pymysql.connect(
@@ -35,18 +34,18 @@ def ping():
         cursor.execute(f"SELECT * FROM webapp.stations WHERE script = 1")
         data_ip = cursor.fetchall()
 
-        if __name__ == '__main__':
-            procs = []
-            for item in data_ip:
-                name = item['station_name']
-                command = "ping -c 10 "
-                hostname = item['ip_modem']
-                proc = Process(target=ping_modem, args=(name, hostname, command, ))
-                procs.append(proc)
-                proc.start()
-                time.sleep(0.5)
-            for proc in procs:
-                proc.join()
+        procs = []
+        for item in data_ip:
+            name = item['station_name']
+            command = "ping -c 10 "
+            hostname = item['ip_modem']
+
+            proc = Process(target=ping_modem, args=(name, hostname, command,))
+            procs.append(proc)
+            proc.start()
+            time.sleep(0.5)
+        for proc in procs:
+            proc.join()
         cursor.execute('commit')
         cursor.close()
 ping()
