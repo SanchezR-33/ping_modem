@@ -6,7 +6,6 @@ from threading import Thread
 import time
 
 
-
 def ping():
     class SQL:
         def __init__(self):
@@ -48,6 +47,5 @@ def ping():
             for proc in procs:
                 proc.join()
         cursor.execute('commit')
-        cursor.close()
-        
+        cursor.close()   
 ping()
